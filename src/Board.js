@@ -26,7 +26,7 @@
 
     togglePiece: function(rowIndex, colIndex) {
       this.get(rowIndex)[colIndex] = + !this.get(rowIndex)[colIndex];
-      this.trigger('change');
+      this.trigger('change   ');
     },
 
     _getFirstRowColumnIndexForMajorDiagonalOn: function(rowIndex, colIndex) {
@@ -79,11 +79,55 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      return false; // fixme
+      console.log('This is the Row Index!! ', rowIndex);
+      /*
+      input: number, index of one row.
+      output: boolean
+        return true if conflict is found
+        return false if no conflict
+      what is a conflict???
+        if more than one element in current row has value equal to 1
+          return true
+        else return false
+      how to access the board??
+        use keyword this to access board
+          this.rows()
+      iterate over this.rows()[rowIndex]
+      */
+      // var currentRow = this.rows()[rowIndex];
+      var count = 0;
+      console.log(this.rows()[rowIndex]);
+      console.log(this.get(rowIndex));
+      for (var i = 0; i < this.get(rowIndex).length; i++) {
+        var element = this.get(rowIndex)[i];
+        if (element === 1) {
+          count += 1;
+        }
+      }
+      if (count > 1) {
+        return true;
+      }
+      return false;
     },
 
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
+     /*
+     consider using attributes to access rows
+     */
+     for (var i = 0; i < this.rows().length; i++) {
+       var currentRow = this.rows()[i];
+       var count = 0;
+       for (var j = 0; j < currentRow.length; j++) {
+         var element = currentRow[j];
+         if (element === 1) {
+          count++;
+         }
+       }
+       if (count > 1) {
+         return true;
+       }
+     }
       return false; // fixme
     },
 
