@@ -79,7 +79,6 @@
     //
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
-      console.log('This is the Row Index!! ', rowIndex);
       /*
       input: number, index of one row.
       output: boolean
@@ -96,8 +95,6 @@
       */
       // var currentRow = this.rows()[rowIndex];
       var count = 0;
-      console.log(this.rows()[rowIndex]);
-      console.log(this.get(rowIndex));
       for (var i = 0; i < this.get(rowIndex).length; i++) {
         var element = this.get(rowIndex)[i];
         if (element === 1) {
@@ -115,18 +112,21 @@
      /*
      consider using attributes to access rows
      */
-     for (var i = 0; i < this.rows().length; i++) {
-       var currentRow = this.rows()[i];
+     for (var i = 0; i < Object.keys(this.attributes).length; i++) {
+       var currentRow = Object.keys(this.attributes)[i];
        var count = 0;
-       for (var j = 0; j < currentRow.length; j++) {
-         var element = currentRow[j];
-         if (element === 1) {
-          count++;
-         }
-       }
-       if (count > 1) {
+       if (this.hasRowConflictAt(currentRow)) {
          return true;
        }
+      //  for (var j = 0; j < currentRow.length; j++) {
+      //    var element = currentRow[j];
+      //    if (element === 1) {
+      //     count++;
+      //    }
+      //  }
+      //  if (count > 1) {
+      //    return true;
+      //  }
      }
       return false; // fixme
     },
@@ -138,11 +138,45 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      /*
+      is it possible to turn each column into a row to then use row functions on columns
+      iterate over boad
+        use colIndex to access column element in each row
+        store each column element in new array
+      somehow use hasRowConflictAt on new array
+      */
+      var columnArray = [];
+      for (var i = 0; i < this.rows().length; i++) {
+        var row = this.rows()[i];
+        columnArray.push(row[colIndex]);
+      }
+
+      var count = 0;
+      for (var i = 0; i < columnArray.length; i++) {
+        var element = columnArray[i];
+        if (element === 1) {
+          count += 1;
+        }
+      }
+      if (count > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any columns on this board contain conflicts
     hasAnyColConflicts: function() {
+      /*
+      iterate over board
+        invoke hasColConflictAt(i)
+        if true return true
+      */
+     for (var i = 0; i < Object.keys(this.attributes).length; i++) {
+       var ele = Object.keys(this.attributes)[i]
+       if (this.hasColConflictAt(ele)) {
+         return true;
+       }
+     }
       return false; // fixme
     },
 
