@@ -16,10 +16,37 @@
 
 
 window.findNRooksSolution = function(n) {
-  var solution = undefined; //fixme
+  // var solution = undefined; //fixme
+  /*
+  input: is a number, also should equal dimensions and number of pieces on board with NO conflict
 
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution;
+  output: matrix (an array of arrays) with no conflicts that has n rooks on board AND dimensions of NxN
+
+    instantiate a new board
+      gives us access to helper functions
+    iterate over board
+      iterate over row
+        toggle piece on
+          check if there are any row or column conflicts
+            if so, toggle piece off
+    
+    return board.rows()?
+  */
+  var solution = new Board({'n': n});
+  
+  for (var i = 0; i < solution.get('n'); i++) {
+    var row = solution.get(i);
+    for (var j = 0; j < row.length; j++) {
+      // var piece = row[j];
+      solution.togglePiece(i, j);
+      if (solution.hasAnyRowConflicts() || solution.hasAnyColConflicts()) {
+        solution.togglePiece(i, j);  
+      }
+    }
+  }
+
+  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution.rows()));
+  return solution.rows();
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
