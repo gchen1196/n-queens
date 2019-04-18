@@ -138,6 +138,7 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
+      console.log('Column Index!!! ', colIndex);
       /*
       is it possible to turn each column into a row to then use row functions on columns
       iterate over boad
@@ -187,11 +188,46 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
+      /*
+      input: index number of column at the first row
+      output: boolean
+      example:  
+        input is 0
+        store input as a variable
+        count variable
+        iterate over board
+          check input var value to see if eqauls 1
+            if so, increase count +1  
+          next iteration increase input var + 1 to see if equal 1
+
+          need formula that gives us a range to iterate over based on input index number
+      */
+     
+
+      var input = majorDiagonalColumnIndexAtFirstRow; //-2
+      var count = 0;
+      for (var i = -(Object.keys(this.attributes).length - 1); i < (Object.keys(this.attributes).length - 1); i++) {
+        if (i >= 0) {
+          var rowElement = this.attributes[i][input];
+          if (rowElement === 1) {
+            count++;
+          }
+          input++;
+        }  
+     }
+     if (count > 1) {
+       return true;
+     }
       return false; // fixme
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
+      for (var i = -(Object.keys(this.attributes).length - 1); i < (Object.keys(this.attributes).length - 1); i++) {
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          return true;
+        }
+      }
       return false; // fixme
     },
 
