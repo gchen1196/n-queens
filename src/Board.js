@@ -237,13 +237,46 @@
     // --------------------------------------------------------------
     //
     // test if a specific minor diagonal on this board contains a conflict
-    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
+    hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) { //4
+      /*
+      need a count variable that increments when row element = 1
+      need to decrease input every iteration
+      range of iteration should be (Object.keys(this.attributes).length - 1) * 2
+      Use i only if it is less than Object.keys(this.attributes).length - 1
+
+      */
+      var count = 0;
+      var input = minorDiagonalColumnIndexAtFirstRow; //4
+      var range = this.get('n') * 2; //8
+
+      for (var i = 0; i < range; i++) {
+        if (i < this.get('n')) {
+          var rowElement = this.attributes[i][input];
+          if (rowElement === 1) {
+            count++;
+          }
+          input--;
+        } 
+      }
+      if (count > 1) {
+        return true;
+      }
       return false; // fixme
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      /*
+      iterate range of 
+      */
+      var range = (Object.keys(this.attributes).length - 1) * 2;
+
+      for (var i = 0; i < range; i++) {
+          if (this.hasMinorDiagonalConflictAt(i) === true) {
+            return true;
+          }
+        }
+        return false; // fixme
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
