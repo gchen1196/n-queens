@@ -138,7 +138,6 @@
     //
     // test if a specific column on this board contains a conflict
     hasColConflictAt: function(colIndex) {
-      console.log('Column Index!!! ', colIndex);
       /*
       is it possible to turn each column into a row to then use row functions on columns
       iterate over boad
